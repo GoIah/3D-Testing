@@ -1,31 +1,42 @@
 import * as THREE from 'three';
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+const width = window.innerWidth, height = window.innerHeight;
 
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize( window.innerWidth, window.innerHeight );
+// init
+
+const camera = new THREE.PerspectiveCamera( 70, width / height, 0.01, 10 );
+camera.position.z = 1;
+
+const scene = new THREE.Scene();
+
+const geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
+const material = new THREE.MeshNormalMaterial();
+
+const mesh = new THREE.Mesh( geometry, material );
+scene.add( mesh );
+
+const renderer = new THREE.WebGLRenderer( { antialias: true } );
+renderer.setSize( width, height );
 renderer.setAnimationLoop( animate );
 document.body.appendChild( renderer.domElement );
 
-const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-const cube = new THREE.Mesh( geometry, material );
-scene.add( cube );
+// animation
 
-// White directional light at half intensity shining from the top.
-const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-scene.add( directionalLight );
+const txt = document.getElementById("data")
 
-new THREE.TextGeometry( text, parameters );
+function AppendDebug(appendto) {
+	txt.innerHTML += (appendto+"\n");
+}
 
-camera.position.z = 2;
-function animate() {
+function animate( time ) {
+	txt.innerHTML = "";
 
-	cube.rotation.y += 0.01;
-	cube.rotation.x += 0.01;
-	cube.rotation.z += 0.01;
+	camera.position.x += Math.sin(time) / 20;
+
+	camera.lookAt(mesh.position);
 
 	renderer.render( scene, camera );
-
+	
+	AppendDebug("a");
+	AppendDebug("b");
 }

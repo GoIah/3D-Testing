@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { Color, color, Mesh } from 'three/webgpu';
 
 const width = window.innerWidth, height = window.innerHeight;
 
@@ -10,10 +11,20 @@ camera.position.z = 1;
 const scene = new THREE.Scene();
 
 const geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
-const material = new THREE.MeshNormalMaterial();
+const material = new THREE.MeshBasicMaterial();
 
 const mesh = new THREE.Mesh( geometry, material );
 scene.add( mesh );
+
+const mesh1 = new THREE.Mesh( geometry, material );
+scene.add( mesh1 );
+
+const mesh2 = new THREE.Mesh( geometry, material );
+scene.add( mesh2 );
+
+const PlaneGeo = new THREE.BoxGeometry( 25, 0.1, 25 );
+const Plane = new THREE.Mesh( PlaneGeo, material );
+scene.add( Plane );
 
 const renderer = new THREE.WebGLRenderer( { antialias: true } );
 renderer.setSize( width, height );
@@ -30,13 +41,27 @@ function AppendDebug(appendto) {
 
 function animate( time ) {
 	txt.innerHTML = "";
+	Plane.position.y = -0.1;
 
-	camera.position.x += Math.sin(time) / 20;
+	var YStretch = 1;
+	var XSnap = 0.0035;
 
-	camera.lookAt(mesh.position);
+	var sin = Math.sin(time*XSnap)*YStretch
+	var cos = Math.cos(time*XSnap)*YStretch
+
+	Plane.color.sethe
+	camera.position.y = 2;
+
+	mesh.position.z = sin;
+	mesh.position.x = cos;
+	
+	mesh1.position.x = sin;
+	mesh2.position.z = cos;
+
+	camera.lookAt(new THREE.Vector3(0,-100,0));
+	
+	AppendDebug("Sin: "+sin);
+	AppendDebug("Cos: "+cos);
 
 	renderer.render( scene, camera );
-	
-	AppendDebug("a");
-	AppendDebug("b");
 }

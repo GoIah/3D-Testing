@@ -1,5 +1,17 @@
-h {
-    width: 100px;
-    height: 100px;
+p {
+    white-space: pre-wrap;
+
+    background-color: rgb(165, 197, 71);
+
+    position: fixed;
+
+    height: auto;
+    width: 320px;
     font-size: 25px;
+}
+
+div {
+    width: auto;
+    height: auto;
+    position: fixed;
 }

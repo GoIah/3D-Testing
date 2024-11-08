@@ -10,21 +10,15 @@ camera.position.z = 1;
 
 const scene = new THREE.Scene();
 
-const geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
-const material = new THREE.MeshBasicMaterial();
+const CarMesh = new THREE.Mesh( new THREE.BoxGeometry( 1, 0.45, 2 ), new THREE.MeshBasicMaterial() );
+CarMesh.position.set(0, 0.45/2, 0);
+CarMesh.material.color.setRGB(1,0,0);
+scene.add( CarMesh );
 
-const mesh = new THREE.Mesh( geometry, material );
-scene.add( mesh );
-
-const mesh1 = new THREE.Mesh( geometry, material );
-scene.add( mesh1 );
-
-const mesh2 = new THREE.Mesh( geometry, material );
-scene.add( mesh2 );
-
-const PlaneGeo = new THREE.BoxGeometry( 25, 0.1, 25 );
-const Plane = new THREE.Mesh( PlaneGeo, material );
-scene.add( Plane );
+const BasePlate = new THREE.Mesh( new THREE.BoxGeometry( 100, 0.2, 100 ), new THREE.MeshBasicMaterial() );
+BasePlate.position.set(0,0,0);
+BasePlate.material.color.setRGB(1, 1, 1);
+scene.add( BasePlate );
 
 const renderer = new THREE.WebGLRenderer( { antialias: true } );
 renderer.setSize( width, height );
@@ -41,27 +35,14 @@ function AppendDebug(appendto) {
 
 function animate( time ) {
 	txt.innerHTML = "";
-	Plane.position.y = -0.1;
 
-	var YStretch = 1;
-	var XSnap = 0.0035;
+	camera.position.x = 0.45;
+	camera.position.y = 0.2;
+	camera.position.z = 1.6;
 
-	var sin = Math.sin(time*XSnap)*YStretch
-	var cos = Math.cos(time*XSnap)*YStretch
-
-	Plane.color.sethe
-	camera.position.y = 2;
-
-	mesh.position.z = sin;
-	mesh.position.x = cos;
-	
-	mesh1.position.x = sin;
-	mesh2.position.z = cos;
-
-	camera.lookAt(new THREE.Vector3(0,-100,0));
-	
-	AppendDebug("Sin: "+sin);
-	AppendDebug("Cos: "+cos);
+	camera.rotation.x = 0.25;
+	camera.rotation.y = 0.45;
+	camera.rotation.z = 0.25;
 
 	renderer.render( scene, camera );
 }
